@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>October Horror Nights — 31 Noites, 31 Filmes</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ==================== CAMADAS ATMOSFÉRICAS DE FUNDO ==================== -->
+  <div class="atmosphere" aria-hidden="true">
+    <div class="fog fog-1"></div>
+    <div class="fog fog-2"></div>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+    <div class="moon" id="moon" title="A lua observa..."></div>
+  </div>
+
+  <!-- ==================== CABEÇALHO ==================== -->
+  <header class="site-header">
+    <div class="header-top">
+      <span class="vhs-label">◉ VHS • OCT-2026 • REC</span>
+      <button id="nightModeBtn" class="night-mode-btn" aria-label="Alternar modo noite de terror">
+        ☾ ENTER NIGHT MODE
+      </button>
+    </div>
+
+    <h1 class="main-title" id="mainTitle" aria-label="October Horror Nights">
+      <span class="title-line">OCTOBER</span>
+      <span class="title-line title-line--red">HORROR NIGHTS</span>
+    </h1>
+
+    <p class="subtitle">31 noites. 31 filmes. Uma única regra: não assistir sozinho.</p>
+    <p class="date-stamp">✦ ───── 🩸 ───── ✦</p>
+    <p class="month-stamp">O U T U B R O &nbsp; D E &nbsp; 2 0 2 6</p>
+  </header>
+
+  <!-- ==================== CONTADOR ==================== -->
+  <section class="counter-section" aria-label="Progresso do mês">
+    <div class="counter-line">
+      <span id="nightsCounter">00 / 31 NOITES</span>
+      <span id="percentCounter">0%</span>
+    </div>
+    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="31" aria-valuenow="0" id="progressBar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </section>
+
+  <!-- ==================== ÁREA PRINCIPAL — ROLETA ==================== -->
+  <main class="roulette-section">
+    <div class="roulette-wrapper">
+      <div class="pointer" id="pointer" aria-hidden="true"></div>
+      <canvas id="rouletteCanvas" width="700" height="700" aria-label="Roleta de filmes de terror"></canvas>
+      <div class="roulette-center">🎃</div>
+    </div>
+
+    <div class="controls">
+      <button id="spinBtn" class="spin-btn" aria-label="Girar a roleta">GIRAR A ROLETA</button>
+      <p id="spinMessage" class="spin-message" aria-live="polite"></p>
+      <p class="random-quote" id="randomQuote"></p>
+    </div>
+
+    <p class="divider">✦ ───────────── 🩸 ───────────── ✦</p>
+  </main>
+
+  <!-- ==================== CARTAZ DO FILME (pós-sorteio) ==================== -->
+  <section class="poster-section" id="posterSection" hidden>
+    <div class="poster-card" id="posterCard">
+      <div class="poster-tag">🎬 FILME DA NOITE</div>
+      <h2 class="poster-title" id="posterTitle">—</h2>
+      <p class="poster-day" id="posterDay">DIA — • OUTUBRO</p>
+
+      <ul class="poster-meta">
+        <li><strong>Ano:</strong> <span id="posterYear">—</span></li>
+        <li><strong>Diretor:</strong> <span id="posterDirector">—</span></li>
+        <li><strong>Duração:</strong> <span id="posterDuration">—</span></li>
+        <li><strong>Gênero:</strong> <span id="posterGenre">—</span></li>
+        <li><strong>Classificação:</strong> <span id="posterRating">—</span></li>
+      </ul>
+
+      <div class="poster-actions">
+        <button class="ghost-btn" id="markWatchedBtn">✓ MARCAR COMO ASSISTIDO</button>
+        <button class="ghost-btn" id="markFavoriteBtn">★ FAVORITO</button>
+      </div>
+    </div>
+
+         <!-- ==================== INGRESSO VIRTUAL ==================== -->
+    <div class="ticket-wrap" id="ticketWrap" hidden>
+      <div class="ticket" id="ticket">
+        <div class="ticket-stub">
+          <span class="ticket-admit">ADMIT ONE</span>
+          <span class="ticket-number" id="ticketNumber">Nº 0001</span>
+        </div>
+
+        <div class="ticket-body">
+          <p class="ticket-cinema" id="ticketCinema">CURSED CINEMA • HALLOWEEN SEASON</p>
+          <h3 class="ticket-movie" id="ticketMovie">—</h3>
+          <p class="ticket-session" id="ticketSession">SESSÃO 01 • OUTUBRO</p>
+          <div class="ticket-couple" id="ticketCouple">— &amp; —</div>
+          <p class="ticket-note">Não se sente na primeira fila. Não olhe pra trás.</p>
+        </div>
+
+        <div class="ticket-stub ticket-stub--right">
+          <span class="ticket-admit">ADMIT ONE</span>
+          <span class="ticket-barcode" aria-hidden="true">▮▯▮▮▯▮▯▯▮▮▯▮▯▮▮▯▮</span>
+        </div>
+      </div>
+      <button class="ghost-btn ticket-download" id="ticketDownloadBtn">⤓ BAIXAR INGRESSO</button>
+    </div>
+
+  </section>
+
+  <!-- ==================== CALENDÁRIO ==================== -->
+  <section class="calendar-section">
+    <h2 class="section-title">THE 31 NIGHTS</h2>
+    <p class="section-sub">Toque em uma noite para ver os detalhes.</p>
+    <div class="calendar-grid" id="calendarGrid" role="grid" aria-label="Calendário de Outubro"></div>
+  </section>
+
+  <!-- ==================== HISTÓRICO ==================== -->
+  <section class="archive-section">
+    <h2 class="section-title">THE ARCHIVE</h2>
+    <p class="section-sub">Registro cronológico das noites já sorteadas.</p>
+    <div class="archive-list" id="archiveList"></div>
+  </section>
+
+  <!-- ==================== CONQUISTAS DO CASAL ==================== -->
+<section class="achievements-section" id="achievementsSection">
+  <h2 class="section-title">COUPLE ACHIEVEMENTS</h2>
+  <p class="section-sub">Algumas coisas que vocês provavelmente não deveriam ter conseguido.</p>
+
+  <div class="achievements-grid">
+
+    <div class="achievement-card" id="achievement-first-night">
+      <div class="achievement-icon">🥇</div>
+      <div class="achievement-info">
+        <h3>PRIMEIRA NOITE</h3>
+        <p>Assistir o primeiro filme.</p>
+      </div>
+      <span class="achievement-status">🔒</span>
+    </div>
+
+    <div class="achievement-card" id="achievement-cold-blood">
+      <div class="achievement-icon">🩸</div>
+      <div class="achievement-info">
+        <h3>SANGUE FRIO</h3>
+        <p>Assistir 5 filmes.</p>
+      </div>
+      <span class="achievement-status">🔒</span>
+    </div>
+
+    <div class="achievement-card" id="achievement-insomnia">
+      <div class="achievement-icon">🌑</div>
+      <div class="achievement-info">
+        <h3>INSÔNIA</h3>
+        <p>Assistir algo depois da meia-noite.</p>
+      </div>
+      <span class="achievement-status">🔒</span>
+    </div>
+
+    <div class="achievement-card" id="achievement-veterans">
+      <div class="achievement-icon">💀</div>
+      <div class="achievement-info">
+        <h3>VETERANOS</h3>
+        <p>Completar as 31 noites.</p>
+      </div>
+      <span class="achievement-status">🔒</span>
+    </div>
+
+    <div class="achievement-card" id="achievement-brave">
+      <div class="achievement-icon">🎃</div>
+      <div class="achievement-info">
+        <h3>CORAJOSOS</h3>
+        <p>5 estrelas em 3 filmes seguidos.</p>
+      </div>
+      <span class="achievement-status">🔒</span>
+    </div>
+
+  </div>
+</section>
+
+  <!-- ==================== PERSONALIZAÇÃO DO CASAL ==================== -->
+  <section class="couple-section">
+    <h2 class="section-title">OUR HORROR MONTH</h2>
+    <p class="couple-title" id="coupleTitle">"___ &amp; ___'s October Horror Nights"</p>
+    <p class="couple-phrase" id="couplePhrase">"31 filmes para assistir juntos."</p>
+
+    <div class="couple-form">
+      <label>Nome 1 <input type="text" id="name1" placeholder="Ex: Alex" maxlength="20" /></label>
+      <label>Nome 2 <input type="text" id="name2" placeholder="Ex: Sam" maxlength="20" /></label>
+      <label class="full-width">Frase personalizada
+        <input type="text" id="phraseInput" placeholder="31 filmes para assistir juntos." maxlength="80" />
+      </label>
+    </div>
+  </section>
+
+  <!-- ==================== RESET ==================== -->
+  <footer class="site-footer">
+    <p class="divider">✦ ───────────── 🩸 ───────────── ✦</p>
+    <button id="resetBtn" class="reset-btn">RESETAR OUTUBRO</button>
+    <p class="footer-note">Stay scared. Stay together. 🖤</p>
+  </footer>
+
+  <!-- ==================== MODAL DE REVELAÇÃO ==================== -->
+  <div class="reveal-overlay" id="revealOverlay" hidden>
+    <div class="reveal-content">
+      <p class="reveal-line1" id="revealLine1">A escolha foi feita...</p>
+      <p class="reveal-glitch" id="revealGlitch">TONIGHT'S MOVIE</p>
+      <h2 class="reveal-title" id="revealTitle">—</h2>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL DE DIA ==================== -->
+  <div class="day-modal-overlay" id="dayModalOverlay" hidden>
+    <div class="day-modal" id="dayModal">
+      <button class="modal-close" id="dayModalClose" aria-label="Fechar">✕</button>
+      <h3 class="day-modal-title" id="dayModalTitle">—</h3>
+      <p class="day-modal-sub" id="dayModalSub">—</p>
+
+      <div class="rating-wrap">
+        <p class="rating-label">Sua nota:</p>
+        <div class="stars" id="starRating" role="radiogroup" aria-label="Avaliação de 1 a 5 estrelas">
+          <span data-value="1" role="radio" aria-label="1 estrela" tabindex="0">★</span>
+          <span data-value="2" role="radio" aria-label="2 estrelas" tabindex="0">★</span>
+          <span data-value="3" role="radio" aria-label="3 estrelas" tabindex="0">★</span>
+          <span data-value="4" role="radio" aria-label="4 estrelas" tabindex="0">★</span>
+          <span data-value="5" role="radio" aria-label="5 estrelas" tabindex="0">★</span>
+        </div>
+      </div>
+
+      <textarea id="noteInput" class="note-input" rows="3" placeholder="Assistimos juntos. A cena final foi absurda..." maxlength="240"></textarea>
+
+      <div class="day-modal-actions">
+        <button class="ghost-btn" id="modalWatchedBtn">✓ ASSISTIDO</button>
+        <button class="ghost-btn" id="modalFavoriteBtn">★ FAVORITO</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== EASTER EGG — SCARE OVERLAY ==================== -->
+  <div class="scare-overlay" id="scareOverlay" hidden>
+    <div class="scare-face">👁</div>
+    <p class="scare-text" id="scareText">YOU SHOULDN'T HAVE DONE THAT</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
